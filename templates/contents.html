@@ -1,0 +1,23 @@
+ {% for content in contents %}
+
+
+<tr val='{{content.id}}'>
+    <th scope="row">{{content.id}}</th>
+    <td>{{ "{0:%H:%M}".format(content.time) }}</td>
+    <td>{{ "{0:%H:%M}".format(content.endtime() ) }}</td>
+    {% if content.remtime() > 60 %}
+    <td>{{ content.remtime() }} 分</td>
+    {% elif content.remtime()> 30 %}
+    <td class='text-success'>{{ content.remtime() }} 分</td>
+    {% elif content.remtime()> 0 %}
+    <td class='text-warning'>{{ content.remtime() }} 分</td>
+    {% else %}
+    <td class='text-danger'> 時間切れ </td>
+
+    {% endif %} {% if not current_user.is_anonymous%}
+    <td><button type="button" class="btn btn-primary" onclick='del_mod( {{ content.id }} )'>
+          削除
+        </button></td>
+    {%endif%}
+</tr>
+{% endfor %}
